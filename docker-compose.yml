@@ -1,0 +1,159 @@
+services:
+
+  ####################################
+  # Interface utilisateur de periscope
+  # ----------------------------------
+  # (basé sur vuejs)
+  periscope-front:
+    image: abesesr/periscope:${PERISCOPE_FRONT_VERSION}
+    container_name: periscope-front
+    restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
+    cpus: ${CPU_LIMIT}
+    environment:
+      PERISCOPE_FRONT_API_BASEURL: ${PERISCOPE_FRONT_API_BASEURL}
+      PERISCOPE_FRONT_TIMELINE_URL: ${PERISCOPE_FRONT_TIMELINE_URL}
+      PERISCOPE_FRONT_APICOM_URL: ${PERISCOPE_FRONT_APICOM_URL}
+    ports:
+      - ${PERISCOPE_FRONT_HTTP_PORT}:80
+
+    labels:
+      # pour envoyer les logs dans le puits de log de l'abes
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=periscope"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=nginx"
+      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+      - "com.centurylinklabs.watchtower.scope=periscope-watchtower-scope"
+
+#
+#
+#  ############################
+#  # periscope-api
+#  # API de periscope
+#  # (écrite en java spring boot)
+#  periscope-api:
+#    image: abesesr/periscope:${PERISCOPE_API_VERSION}
+#    container_name: periscope-api
+#    restart: unless-stopped
+#    mem_limit: ${MEM_LIMIT}
+#    cpus: ${CPU_LIMIT}
+#    volumes:
+#      - ${PERISCOPE_API_WORKDIR}:/workdir/
+#    environment:
+#      TZ: Europe/Paris
+#      JAVA_TOOL_OPTIONS: -Duser.timezone=Europe/Paris
+#      # Commande pour les logs (ne pas utiliser l'option timestamp donnera l'heure -2)
+#      # sudo docker-compose logs --follow --tail 0 periscope-api
+#      # Pour basculer sur bon application-xxx.properties préalablement embarqué
+#      # dans le code ici:
+#      # https://github.com/abes-esr/abes-hello-back/tree/develop/web/src/main/resources/
+#      SPRING_PROFILES_ACTIVE: ${PERISCOPE_API_SPRING_PROFILES_ACTIVE}
+#      # Pour surcharger les paramètres spring du application-xxx.properties
+#      # ci-dessous via le système de .env de docker
+#      # https://www.linkedin.com/pulse/externalizing-properties-spring-boot-application-docker-phani-bushan
+#      # pour la liste de tous les champs qu'on peut surcharger,
+#      # voir le contenu des application-xxx.properties embarqués dans le code sources
+#      SPRING_DATASOURCE_PERISCOPE_JDBCURL: 'jdbc:postgresql://periscope-db:5432/periscope'
+#      SPRING_DATASOURCE_PERISCOPE_USERNAME: ${PERISCOPE_DB_POSTGRES_USER}
+#      SPRING_DATASOURCE_PERISCOPE_PASSWORD: ${PERISCOPE_DB_POSTGRES_PASSWORD}
+#      SPRING_DATASOURCE_BASEXML_JDBCURL: ${PERISCOPE_API_SPRING_BASEXML_DATASOURCE_URL}
+#      SPRING_DATASOURCE_BASEXML_USERNAME: ${PERISCOPE_API_SPRING_BASEXML_DATASOURCE_USERNAME}
+#      SPRING_DATASOURCE_BASEXML_PASSWORD: ${PERISCOPE_API_SPRING_BASEXML_DATASOURCE_PASSWORD}
+#      LOGGING_LEVEL_ROOT: ${PERISCOPE_LOGGING_LEVEL_ROOT}
+#      LOGGING_LEVEL_FR_ABES_PERISCOPE: ${PERISCOPE_LOGGING_LEVEL_PERISCOPE}
+#      SUDOC_SERVEUR: ${PERISCOPE_SUDOC_SERVER}
+#      SUDOC_PORT : ${PERISCOPE_SUDOC_PORT}
+#      SUDOC_LOGIN : ${PERISCOPE_SUDOC_LOGIN}
+#      APP_JWTSECRET: ${PERISCOPE_API_JWT_SECRET}
+#    ports:
+#      - ${PERISCOPE_API_HTTP_PORT}:8082
+#    depends_on:
+#      - periscope-db
+#    labels:
+#      # pour envoyer les logs dans le puits de log de l'abes
+#      - "co.elastic.logs/enabled=true"
+#      - "co.elastic.logs/processors.add_fields.target="
+#      - "co.elastic.logs/processors.add_fields.fields.abes_appli=periscope"
+#      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=java-spring"
+#      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+#      - "com.centurylinklabs.watchtower.scope=periscope-watchtower-scope"
+#
+#
+#  periscope-batch:
+#    image: abesesr/periscope:${PERISCOPE_BATCH_VERSION}
+#    container_name: periscope-batch
+#    restart: unless-stopped
+#    mem_limit: ${MEM_LIMIT}
+#    cpus: ${CPU_LIMIT}
+#    volumes:
+#      - ${PERISCOPE_BATCH_STAT_WORKDIR}:/stat/
+#      - ${PERISCOPE_API_WORKDIR}:/workdir/
+#    environment:
+#      TZ: Europe/Paris
+#      JAVA_TOOL_OPTIONS: -Duser.timezone=Europe/Paris
+#      # sudo docker-compose logs --follow --tail 0 periscope-batch
+#      PERISCOPE_BATCH_AT_STARTUP: ${PERISCOPE_BATCH_AT_STARTUP}
+#      PERISCOPE_BATCH_DEPLOY_CRON: ${PERISCOPE_BATCH_DEPLOY_CRON}
+#      PERISCOPE_BATCH_CRON_TRAPERISCOPEENT: ${PERISCOPE_BATCH_CRON_TRAPERISCOPEENT}
+#      PERISCOPE_BATCH_CRON_STAT: ${PERISCOPE_BATCH_CRON_STAT}
+#      # Pour basculer sur bon application-xxx.properties préalablement embarqué
+#      # dans le code ici:
+#      # https://github.com/abes-esr/abes-hello-back/tree/develop/batch/src/main/resources/
+#      SPRING_PROFILES_ACTIVE: ${PERISCOPE_API_SPRING_PROFILES_ACTIVE}
+#      # Pour surcharger les paramètres spring du application-xxx.properties
+#      # ci-dessous via le système de .env de docker
+#      # https://www.linkedin.com/pulse/externalizing-properties-spring-boot-application-docker-phani-bushan
+#      # pour la liste de tous les champs qu'on peut surcharger,
+#      # voir le contenu des application-xxx.properties embarqués dans le code sources
+#      SPRING_DATASOURCE_PERISCOPE_JDBCURL: 'jdbc:postgresql://periscope-db:5432/periscope'
+#      SPRING_DATASOURCE_PERISCOPE_USERNAME: ${PERISCOPE_DB_POSTGRES_USER}
+#      SPRING_DATASOURCE_PERISCOPE_PASSWORD: ${PERISCOPE_DB_POSTGRES_PASSWORD}
+#      SPRING_DATASOURCE_BASEXML_JDBCURL: ${PERISCOPE_API_SPRING_BASEXML_DATASOURCE_URL}
+#      SPRING_DATASOURCE_BASEXML_USERNAME: ${PERISCOPE_API_SPRING_BASEXML_DATASOURCE_USERNAME}
+#      SPRING_DATASOURCE_BASEXML_PASSWORD: ${PERISCOPE_API_SPRING_BASEXML_DATASOURCE_PASSWORD}
+#      LOGGING_LEVEL_ROOT: ${PERISCOPE_LOGGING_LEVEL_ROOT}
+#      LOGGING_LEVEL_FR_ABES_PERISCOPE: ${PERISCOPE_LOGGING_LEVEL_PERISCOPE}
+#      SUDOC_SERVEUR: ${PERISCOPE_SUDOC_SERVER}
+#      SUDOC_PORT : ${PERISCOPE_SUDOC_PORT}
+#      SUDOC_LOGIN : ${PERISCOPE_SUDOC_LOGIN}
+#      BATCH_MIN_HOUR: ${BATCH_MIN_HOUR}
+#      BATCH_MAX_HOUR: ${BATCH_MAX_HOUR}
+#    labels:
+#      # pour envoyer les logs dans le puits de log de l'abes
+#      - "co.elastic.logs/enabled=true"
+#      - "co.elastic.logs/processors.add_fields.target="
+#      - "co.elastic.logs/processors.add_fields.fields.abes_appli=periscope"
+#      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=java-spring"
+#
+#  #######################################
+#  # periscope-watchtower
+#  # Conteneur chargé de mettre à jour automatiquement toutes les N secondes
+#  # les images docker des conteneurs surveillés (via le système de label/scope de watchtower)
+#  # plus d'info : https://containrrr.dev/watchtower
+#  # cf README.md pour explications : https://github.com/abes-esr/periscope-docker#d%C3%A9ploiement-continu
+#  periscope-watchtower:
+#    image: containrrr/watchtower:1.4.0
+#    container_name: periscope-watchtower
+#    restart: unless-stopped
+#    mem_limit: ${MEM_LIMIT}
+#    cpus: ${CPU_LIMIT}
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    environment:
+#      WATCHTOWER_CLEANUP: "true"
+#      WATCHTOWER_POLL_INTERVAL: 60
+#      WATCHTOWER_DEBUG: "false"
+#      WATCHTOWER_NO_STARTUP_MESSAGE: "true"
+#      WATCHTOWER_WARN_ON_HEAD_FAILURE: "never"
+#      WATCHTOWER_RUN_ONCE: ${PERISCOPE_WATCHTOWER_RUN_ONCE}
+#      WATCHTOWER_NOTIFICATIONS: "slack"
+#      WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: ${PERISCOPE_WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL}
+#      WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER: ${PERISCOPE_WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER}
+#      WATCHTOWER_NOTIFICATION_SLACK_CHANNEL: "#notif-periscope"
+#      WATCHTOWER_SCOPE: "periscope-watchtower-scope"
+#    labels:
+#      - "com.centurylinklabs.watchtower.scope=periscope-watchtower-scope"
+#
+#
+
