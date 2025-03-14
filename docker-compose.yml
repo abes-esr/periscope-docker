@@ -90,6 +90,8 @@ services:
       - "co.elastic.logs/processors.add_fields.target="
       - "co.elastic.logs/processors.add_fields.fields.abes_appli=periscope"
       - "co.elastic.logs/processors.add_fields.fields.abes_middleware=java-spring"
+      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+      - "com.centurylinklabs.watchtower.scope=periscope-watchtower-scope"
 
 #  #######################################
 #  # periscope-watchtower
@@ -97,28 +99,25 @@ services:
 #  # les images docker des conteneurs surveillés (via le système de label/scope de watchtower)
 #  # plus d'info : https://containrrr.dev/watchtower
 #  # cf README.md pour explications : https://github.com/abes-esr/periscope-docker#d%C3%A9ploiement-continu
-#  periscope-watchtower:
-#    image: containrrr/watchtower:1.4.0
-#    container_name: periscope-watchtower
-#    restart: unless-stopped
-#    mem_limit: ${MEM_LIMIT}
-#    cpus: ${CPU_LIMIT}
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
-#    environment:
-#      WATCHTOWER_CLEANUP: "true"
-#      WATCHTOWER_POLL_INTERVAL: 60
-#      WATCHTOWER_DEBUG: "false"
-#      WATCHTOWER_NO_STARTUP_MESSAGE: "true"
-#      WATCHTOWER_WARN_ON_HEAD_FAILURE: "never"
-#      WATCHTOWER_RUN_ONCE: ${PERISCOPE_WATCHTOWER_RUN_ONCE}
-#      WATCHTOWER_NOTIFICATIONS: "slack"
-#      WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: ${PERISCOPE_WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL}
-#      WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER: ${PERISCOPE_WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER}
-#      WATCHTOWER_NOTIFICATION_SLACK_CHANNEL: "#notif-periscope"
-#      WATCHTOWER_SCOPE: "periscope-watchtower-scope"
-#    labels:
-#      - "com.centurylinklabs.watchtower.scope=periscope-watchtower-scope"
-#
-#
-
+  periscope-watchtower:
+    image: containrrr/watchtower:1.4.0
+    container_name: periscope-watchtower
+    restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
+    cpus: ${CPU_LIMIT}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_POLL_INTERVAL: 60
+      WATCHTOWER_DEBUG: "false"
+      WATCHTOWER_NO_STARTUP_MESSAGE: "true"
+      WATCHTOWER_WARN_ON_HEAD_FAILURE: "never"
+      WATCHTOWER_RUN_ONCE: ${PERISCOPE_WATCHTOWER_RUN_ONCE}
+      WATCHTOWER_NOTIFICATIONS: "slack"
+      WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: ${PERISCOPE_WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL}
+      WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER: ${PERISCOPE_WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER}
+      WATCHTOWER_NOTIFICATION_SLACK_CHANNEL: "#notif-periscope"
+      WATCHTOWER_SCOPE: "periscope-watchtower-scope"
+    labels:
+      - "com.centurylinklabs.watchtower.scope=periscope-watchtower-scope"
