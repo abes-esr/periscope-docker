@@ -83,13 +83,31 @@ services:
       BASEXML_DATASOURCE_URL: ${PERISCOPE_API_BASEXML_URL}
       BASEXML_DATASOURCE_USERNAME: ${PERISCOPE_API_BASEXML_USERNAME}
       BASEXML_DATASOURCE_PASSWORD: ${PERISCOPE_API_BASEXML_PASSWORD}
-
     labels:
       # pour envoyer les logs dans le puits de log de l'abes
       - "co.elastic.logs/enabled=true"
       - "co.elastic.logs/processors.add_fields.target="
       - "co.elastic.logs/processors.add_fields.fields.abes_appli=periscope"
       - "co.elastic.logs/processors.add_fields.fields.abes_middleware=java-spring"
+      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+      - "com.centurylinklabs.watchtower.scope=periscope-watchtower-scope"
+
+  periscope-db:
+    image: solr:9.8.1
+    container_name: periscope-db
+    restart: unless-stopped
+    user: root
+    ports:
+      - 19082:8983
+    volumes:
+      - ./configs:/configs-periscope-v2
+      - ./entrypoint.sh:/entrypoint.sh
+    command: ["/entrypoint.sh"]
+    labels:
+      # pour envoyer les logs dans le puits de log de l'abes
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=periscope"
       # pour que les mises à jour de cette image soient auto-déployées par watchtower
       - "com.centurylinklabs.watchtower.scope=periscope-watchtower-scope"
 
