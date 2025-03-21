@@ -19,5 +19,8 @@ at -l
 ```
 ![image](https://github.com/user-attachments/assets/e75c21cf-f860-4ea3-961c-17e27aa77835)
 
-_dans l'image on voit que mon scripte se lancera le 18 fevrier à 22h00 en 2025._
+_dans l'image on voit que mon script se lancera le 18 fevrier à 22h00 en 2025._
 
+```
+http://localhost:19082/solr/admin/cores?action=CREATE&name=periscope-v2&configSet=periscope-v2
+```
