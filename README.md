@@ -28,7 +28,7 @@ cela ouvre un petit editeur et il faudrait dans cette editeur ecrire la commande
 ```
 sudo docker compose up periscope-batch
 ```
-![image](https://github.com/user-attachments/assets/11ebe904-1972-4020-9583-71b2475637a6)  
+_(ps: j'ai peur que le sudo ne passe pas)_
 Pour quitter et sauvegarder notre commande en différé, il faut faire **ctrl + D**.
 
 Une fois sauvegarder, On peut effectuer la commande suivante pour lister et verifier que notre script se lancera.
