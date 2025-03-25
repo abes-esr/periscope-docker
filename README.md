@@ -24,9 +24,11 @@ Pour se fait, il faut executer le contenair avec la variable d'environement `PER
 at 2200
 ```
 
-cela ouvre un petit editeur et il faudrait dans cette editeur ecrire la commande suivante : 
+cela ouvre un petit editeur et il faudrait dans cette editeur ecrire les commandes suivantes :  
 ```
+sed -i 's/PERISCOPE_BATCH_AT_STARTUP=0/PERISCOPE_BATCH_AT_STARTUP=1/' .env
 sudo docker compose up periscope-batch
+sed -i 's/PERISCOPE_BATCH_AT_STARTUP=1/PERISCOPE_BATCH_AT_STARTUP=0/' .env
 ```
 _(ps: j'ai peur que le sudo ne passe pas)_
 Pour quitter et sauvegarder notre commande en différé, il faut faire **ctrl + D**.
