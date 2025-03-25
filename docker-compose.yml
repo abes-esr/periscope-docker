@@ -104,8 +104,6 @@ services:
       - "co.elastic.logs/enabled=true"
       - "co.elastic.logs/processors.add_fields.target="
       - "co.elastic.logs/processors.add_fields.fields.abes_appli=periscope"
-      # pour que les mises à jour de cette image soient auto-déployées par watchtower
-      - "com.centurylinklabs.watchtower.scope=periscope-watchtower-scope"
 
 #  #######################################
 #  # periscope-watchtower
