@@ -28,11 +28,13 @@ cela ouvre un petit editeur et il faudrait dans cette editeur lancer la commande
 ![image](https://github.com/user-attachments/assets/26fcebcd-ed35-40fc-9be0-83ea7dca6a71)
 
 Pour quitter et sauvegarder notre commande en différé, il faut faire **ctrl + D**.  
-(ps: si au moment de sauvegarder, le terminal parle du deamon atd, il suffit de lancer ```sudo docker exec -it periscope-batch atd``` dans la console puis verifier comme si desous avec la commande at -l)
+Si au moment de sauvegarder, le terminal affiche _"Can't open /var/run/atd.pid to signal atd. No atd running?"_, il suffit de lancer ```sudo docker exec -it periscope-batch atd``` dans la console pour lancer le deamon atd.
+Puis verifier comme si desous avec la commande at -l
 Une fois sauvegarder, On peut effectuer la commande suivante pour lister et verifier que notre script se lancera.
 ```
 sudo docker exec -it periscope-batch at -l
 ```
+_Si on ne voit pas son job dans la liste, il faut recreer le job comme ci-dessus_
 ![image](https://github.com/user-attachments/assets/a961dad6-07f8-496d-a808-837557ee29be)
 
 _dans l'image on voit que mon script se lancera le 2 avril à 22h00 en 2025._
