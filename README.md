@@ -1,26 +1,29 @@
 # periscope-docker
 
 ## Restauration d'application (Work in progress..)
-Pour restaurer les données solr, il suffit de se connecter sur le serveur [[LIEN]] avec l'utilisateur dédié au batch.
-Se placer ici : /home/batch/periscope
+
+Pour restaurer l'index 
+```
+http://diplotaxis5-prod.v102.abes.fr:19082/solr/admin/cores?action=CREATE&name=periscope-v2&configSet=periscope-v2
+```
+
+Pour restaurer les données solr, il suffit de se connecter sur le serveur diplotaxis5-prod.v102.abes.fr
+Se placer ici : /opt/pod/periscope-docker
 il suffirait d'executer le script dans le repertoire cependant le script est très gourmant sur la baseXML. Il est donc conseiller de l'executer à des heures creusent ou d'utiliser la commande "at" qui permet de lancer un script en différé.
 
 ```
-at 2200
+sudo docker exec -it periscope-batch at 2200
 ```
 
 cela ouvre un petit editeur et il faudrait dans cette editeur lancer la commande ./run_batch.sh.  
-![image](https://github.com/user-attachments/assets/11ebe904-1972-4020-9583-71b2475637a6)  
+![image](https://github.com/user-attachments/assets/57d894f0-fde4-4f1a-bbaf-82a50f941eb2)
+
 Pour quitter et sauvegarder notre commande en différé, il faut faire **ctrl + D**.
 
 Une fois sauvegarder, On peut effectuer la commande suivante pour lister et verifier que notre script se lancera.
 ```
-at -l
+sudo docker exec -it periscope-batch at -l
 ```
-![image](https://github.com/user-attachments/assets/e75c21cf-f860-4ea3-961c-17e27aa77835)
+![image](https://github.com/user-attachments/assets/a961dad6-07f8-496d-a808-837557ee29be)
 
-_dans l'image on voit que mon script se lancera le 18 fevrier à 22h00 en 2025._
-
-```
-http://localhost:19082/solr/admin/cores?action=CREATE&name=periscope-v2&configSet=periscope-v2
-```
+_dans l'image on voit que mon script se lancera le 2 avril à 22h00 en 2025._
