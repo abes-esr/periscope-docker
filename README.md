@@ -17,7 +17,7 @@ sudo docker exec -it periscope-batch at 2200
 ```
 
 cela ouvre un petit editeur et il faudrait dans cette editeur lancer la commande ./run_batch.sh.  
-![image](https://github.com/user-attachments/assets/57d894f0-fde4-4f1a-bbaf-82a50f941eb2)
+![image](https://github.com/user-attachments/assets/26fcebcd-ed35-40fc-9be0-83ea7dca6a71)
 
 Pour quitter et sauvegarder notre commande en différé, il faut faire **ctrl + D**.
 
