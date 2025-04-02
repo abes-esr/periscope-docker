@@ -1,7 +1,9 @@
 # periscope-docker
 
 ## Restauration d'application (Work in progress..)
-
+ 
+il suffit de se connecter sur le serveur diplotaxis5-prod.v102.abes.fr
+ 
 ### Pour restaurer Solr
 Il suffit de lancer le projet avec la commande suivante :
 ```
@@ -13,7 +15,7 @@ sudo docker compose up -d
 http://diplotaxis5-prod.v102.abes.fr:19082/solr/admin/cores?action=CREATE&name=periscope-v2&configSet=periscope-v2
 ```
 
-### Pour restaurer les données solr, il suffit de se connecter sur le serveur diplotaxis5-prod.v102.abes.fr
+### Pour restaurer les données solR
 (IL faut verifier que le core à bien été créé)
 Se placer ici : /opt/pod/periscope-docker
 il suffirait d'executer le script dans le repertoire cependant le script est très gourmant sur la baseXML. Il est donc conseiller de l'executer à des heures creusent ou d'utiliser la commande "at" qui permet de lancer un script en différé.
