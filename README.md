@@ -25,7 +25,8 @@ sudo docker exec -it periscope-batch at 2200
 cela ouvre un petit editeur et il faudrait dans cette editeur lancer la commande ```/scripts/run_batch.sh >> /scripts/app.log``` comme la capture d'ecran si dessous.  
 ![image](https://github.com/user-attachments/assets/26fcebcd-ed35-40fc-9be0-83ea7dca6a71)
 
-Pour quitter et sauvegarder notre commande en différé, il faut faire **ctrl + D**. (ps: si au moment de sauvegarder, le terminal parle du deamon atd, il suffit de lancer ```sudo docker exec -it periscope-batch atd``` dans la console puis de refaire la commande at 2200)
+Pour quitter et sauvegarder notre commande en différé, il faut faire **ctrl + D**.  
+(ps: si au moment de sauvegarder, le terminal parle du deamon atd, il suffit de lancer ```sudo docker exec -it periscope-batch atd``` dans la console puis verifier comme si desous avec la commande at -l)
 Une fois sauvegarder, On peut effectuer la commande suivante pour lister et verifier que notre script se lancera.
 ```
 sudo docker exec -it periscope-batch at -l
