@@ -10,10 +10,9 @@ Il suffit de lancer le projet avec la commande suivante :
 sudo docker compose up -d
 ```
 
-### Pour restaurer l'index 
-```
-http://diplotaxis5-prod.v102.abes.fr:19082/solr/admin/cores?action=CREATE&name=periscope-v2&configSet=periscope-v2
-```
+### Pour restaurer le Core
+Il suffit de faire un appel get sur cette url (ou d'aller sur cette url)
+[http://diplotaxis5-prod.v102.abes.fr:19082/solr/admin/cores?action=CREATE&name=periscope-v2&configSet=periscope-v2](http://diplotaxis5-prod.v102.abes.fr:19082/solr/admin/cores?action=CREATE&name=periscope-v2&configSet=periscope-v2)
 
 ### Pour restaurer les données solR
 (IL faut verifier que le core à bien été créé)
