@@ -10,7 +10,6 @@ RUN chmod +x /entrypoint.sh
 USER solr
 
 # Créer le coeur solr au démarrage
-#CMD ["solr-precreate", "periscope-v2", "/opt/solr/server/solr/configsets/periscope-v2/conf"]
-EXPOSE 8983
 
+EXPOSE 8983
 ENTRYPOINT ["/entrypoint.sh"]
