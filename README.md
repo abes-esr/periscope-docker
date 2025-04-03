@@ -33,7 +33,7 @@ Une fois sauvegarder, On peut effectuer la commande suivante pour lister et veri
 ```
 sudo docker exec -it periscope-batch at -l
 ```
-_Si on ne voit pas son job dans la liste, il faut recreer le job comme ci-dessus_
+_Si on ne voit pas son job dans la liste, il faut recreer le job comme ci-dessus._  
 ![image](https://github.com/user-attachments/assets/a961dad6-07f8-496d-a808-837557ee29be)
 
 _dans l'image on voit que mon script se lancera le 2 avril à 22h00 en 2025._
