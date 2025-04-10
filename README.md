@@ -17,8 +17,8 @@ Il suffit de faire un appel get sur cette url (ou d'aller sur cette url)
 ### Pour restaurer les données solR
 (IL faut verifier que le core à bien été créé)
 Se placer ici : /opt/pod/periscope-docker
-il suffit de lancer le contenair periscope-batch. En effet, le contenair periscope-batch est programmer pour indexer les données via la base XML, de plus il index les données le jour du lancement du contenair (à 22h00 car l'indexation est tres gourmand). C'est à dire que si le contenair est déjà démarrer, il faudrait le redemarrer pour en etre sur.
+il suffit de lancer le container periscope-batch. En effet, le container periscope-batch est programmer pour indexer les données via la base XML, de plus il index les données le jour du lancement du container (à 22h00 car l'indexation est tres gourmand). C'est à dire que si le container est déjà démarrer, il faudrait le redemarrer pour en etre sur.
 ```
 sudo docker compose up -d periscope-batch
 ```
-Une fois le contenair démarrer, il suffit d'attendre 22h pour qu'il index les données. on peut suivre les logs du contenair pour voir si tout c'est bien passé.
+Une fois le container démarrer, il suffit d'attendre 22h pour qu'il index les données. on peut suivre les logs du container pour voir si tout c'est bien passé.
