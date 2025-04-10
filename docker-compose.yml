@@ -74,7 +74,6 @@ services:
     cpus: ${CPU_LIMIT}
     environment:
       # sudo docker-compose logs --follow --tail 0 periscope-batch
-      PERISCOPE_BATCH_AT_STARTUP: ${PERISCOPE_BATCH_AT_STARTUP}
       # Pour basculer sur bon application-xxx.properties préalablement embarqué
       # dans le code ici:
       # https://github.com/abes-esr/abes-hello-back/tree/develop/batch/src/main/resources/
@@ -92,12 +91,19 @@ services:
       # pour que les mises à jour de cette image soient auto-déployées par watchtower
       - "com.centurylinklabs.watchtower.scope=periscope-watchtower-scope"
 
+  periframe:
+    build: "https://oauth2:${TOKEN_GITLAB_PERIFRAME}@git.abes.fr/depots/periframe.git#master"
+    container_name: periframe
+    restart: "always"
+    ports:
+      - ${PERIFRAME_HTTP_PORT}:8080
+
   periscope-db:
     build:
       dockerfile: ./docker/solr/Dockerfile
     container_name: periscope-db
     ports:
-      - 19082:8983
+      - ${PERISCOPE_DB_HTTP_PORT}:8983
     labels:
       # pour envoyer les logs dans le puits de log de l'abes
       - "co.elastic.logs/enabled=true"
