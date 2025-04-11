@@ -19,4 +19,4 @@ fi
 solr start &
 sleep 5
 solr create_core -c periscope-v2 -d /var/solr/data/configsets/periscope-v2/conf -p 8983
-solr restart -f
+solr restart -f -Dsolr.jetty.request.header.size=65535

@@ -102,6 +102,7 @@ services:
     build:
       dockerfile: ./docker/solr/Dockerfile
     container_name: periscope-db
+    restart: unless-stopped
     ports:
       - ${PERISCOPE_DB_HTTP_PORT}:8983
     labels:
