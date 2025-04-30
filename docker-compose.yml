@@ -51,7 +51,7 @@ services:
       # https://www.linkedin.com/pulse/externalizing-properties-spring-boot-application-docker-phani-bushan
       # pour la liste de tous les champs qu'on peut surcharger,
       # voir le contenu des application-xxx.properties embarqués dans le code sources
-      SOLR_BASEURL: http://periscope-db:8983/solr
+      SOLR_BASEURL: http://periscope-solr:8983/solr
       BASEXML_DATASOURCE_URL: ${PERISCOPE_API_BASEXML_URL}
       BASEXML_DATASOURCE_USERNAME: ${PERISCOPE_API_BASEXML_USERNAME}
       BASEXML_DATASOURCE_PASSWORD: ${PERISCOPE_API_BASEXML_PASSWORD}
@@ -78,7 +78,7 @@ services:
       # dans le code ici:
       # https://github.com/abes-esr/abes-hello-back/tree/develop/batch/src/main/resources/
       SPRING_PROFILES_ACTIVE: ${PERISCOPE_API_SPRING_PROFILES_ACTIVE}
-      SOLR_BASEURL: http://periscope-db:8983/solr
+      SOLR_BASEURL: http://periscope-solr:8983/solr
       BASEXML_DATASOURCE_URL: ${PERISCOPE_API_BASEXML_URL}
       BASEXML_DATASOURCE_USERNAME: ${PERISCOPE_API_BASEXML_USERNAME}
       BASEXML_DATASOURCE_PASSWORD: ${PERISCOPE_API_BASEXML_PASSWORD}
@@ -94,11 +94,11 @@ services:
   periframe:
     build: "https://oauth2:${TOKEN_GITLAB_PERIFRAME}@git.abes.fr/depots/periframe.git#master"
     container_name: periframe
-    restart: "always"
+    restart: unless-stopped
     ports:
       - ${PERIFRAME_HTTP_PORT}:8080
 
-  periscope-db:
+  periscope-solr:
     build:
       dockerfile: ./docker/solr/Dockerfile
     container_name: periscope-db
