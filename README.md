@@ -7,7 +7,7 @@ il suffit de se connecter sur le serveur diplotaxis5-prod.v102.abes.fr
 ### Pour restaurer Solr
 Il suffit de lancer le projet avec la commande suivante :
 ```
-sudo docker compose up -d periscope-db
+sudo docker compose up -d periscope-solr
 ```
 
 ### Pour restaurer le Core

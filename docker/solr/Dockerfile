@@ -9,7 +9,5 @@ RUN chown -R solr:solr /var/solr/data
 RUN chmod +x /entrypoint.sh
 USER solr
 
-# Créer le coeur solr au démarrage
-
 EXPOSE 8983
 ENTRYPOINT ["/entrypoint.sh"]
