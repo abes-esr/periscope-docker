@@ -10,6 +10,8 @@ services:
     restart: unless-stopped
     mem_limit: ${MEM_LIMIT}
     cpus: ${CPU_LIMIT}
+    depends_on:
+      - periscope-api
     environment:
       PERISCOPE_FRONT_API_BASEURL: ${PERISCOPE_FRONT_API_BASEURL}
       PERISCOPE_FRONT_TIMELINE_URL: ${PERISCOPE_FRONT_TIMELINE_URL}
@@ -72,6 +74,9 @@ services:
     restart: "no"
     mem_limit: ${MEM_LIMIT}
     cpus: ${CPU_LIMIT}
+    depends_on:
+      - periscope-api
+      - periscope-solr
     environment:
       # sudo docker-compose logs --follow --tail 0 periscope-batch
       # Pour basculer sur bon application-xxx.properties préalablement embarqué
